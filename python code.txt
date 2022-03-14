@@ -1,0 +1,59 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+
+df1=pd.read_excel(r'E:\BI\project 2\mine\dataset1.xlsx')
+print(df1)
+df1.columns
+
+df2=pd.read_excel(r'E:\BI\project 2\mine\dataset2.xlsx')
+print(df2)
+
+df3=pd.read_excel(r'E:\BI\project 2\mine\dataset3.xlsx')
+print(df3)
+
+
+KPI1-country wise food inst status
+
+KPI1=df1[['Vendor County','date',' Number of Food Instruments Redeemed ']].groupby(['Vendor County']).sum()
+pd.pivot_table(KPI1,index=['Vendor County',' Number of Food Instruments Redeemed '])
+firstkpi=KPI1[[' Number of Food Instruments Redeemed ']].sort_values(by=' Number of Food Instruments Redeemed ')
+firstkpi
+plt.figure(figsize=(20,10))
+sns.lineplot(x='Vendor County',y=' Number of WIC Card Transactions Processed ',data=kpi3)
+plt.xticks(rotation=60)
+plt.savefig("kpi3.jpg")
+
+
+kpi2-average cost wrt year
+
+kpi2=df1[['date',' Average Cost per Family ']].groupby('date').sum()
+kpi2
+secondkpi=pd.pivot_table(kpi2,index=['date',' Average Cost per Family '])
+secondkpi
+
+Kpi3-NO of wic card transactions processed
+kpi3=df1[[ 'Vendor County',' Number of WIC Card Transactions Processed ']].groupby( 'Vendor County').sum()
+kpi3
+
+plt.figure(figsize=(20,10))
+sns.lineplot(x='Vendor County',y=' Number of WIC Card Transactions Processed ',data=kpi3)
+plt.xticks(rotation=60)
+plt.savefig("kpi3.jpg")
+
+
+kpi4-participant cateogory 
+
+df2['percentage']=(df2[' Number of Participants Redeemed ']/(df2[' Number of Participants Redeemed ']).sum())*100
+kpi4=df2[['Vendor Location', 'Participant Category','percentage']].groupby([ 'Participant Category']).sum()
+kpi4
+
+kpi4.sort_values(by='percentage' , ascending=False,inplace= True)
+sns.barplot(y=kpi4.percentage,x=kpi4['Participant Category'])
+
+
+
+
+
